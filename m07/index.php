@@ -10,7 +10,7 @@
 	
   <? include "parts/navbar.php" ?>
 
-    <div class="view-window hero" style="background-image: url(img/m1.jpg">
+    <div class="view-window hero" style="background-image: url(img/girls_thumb.jpg">
     	<h1>Painting</h1>
     </div>
     
@@ -25,8 +25,7 @@
     				</div>
     			</div>
     			<div class="col-xs-12 col-md-6">
-    				<img src="http://via.placeholder.com/600/97c6c4/fff?text=Papergirls" alt="Papergirls" class="image-cover">
-    				<!--http://homedepot.com-->
+    				<img src="http://via.placeholder.com/600/ff971d/fff?text=Papergirls" alt="painting" class="image-cover">
     			</div>
     		</div>
     	</div>
@@ -40,7 +39,7 @@
     		<div class="col-xs-6 col-md-3">
     			<figure>
     				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/97c6c4/fff?text=Papergirls" alt="Papergirls">
+    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Papergirls" alt="painting">
     				</div>
     				<figcation>Size</figcation>
     			</figure>
@@ -48,7 +47,7 @@
     		<div class="col-xs-6 col-md-3">
     			<figure>
     				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/97c6c4/fff?text=Size" alt="Size">
+    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Size" alt="painting">
     				</div>
     				<figcation>Details</figcation>
     			</figure>
@@ -56,7 +55,7 @@
     		<div class="col-xs-6 col-md-3">
     			<figure>
     				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/97c6c4/fff?text=Details" alt="Details">
+    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Details" alt="painting">
     				</div>
     				<figcation>Content</figcation>
     			</figure>
@@ -64,7 +63,7 @@
     		<div class="col-xs-6 col-md-3">
     			<figure>
     				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/97c6c4/fff?text=Infor" alt="Content">
+    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Infor" alt="painting">
     				</div>
     				<figcation>Popular</figcation>
     			</figure>
