@@ -9,7 +9,6 @@ $products = file_get_json($filename);
 $empty_product = (object)[
 	"product_name"=>"",
 	"product_description"=>"",
-	"technical_specs"=>[],
 	"price"=>""
 ];
 
@@ -19,7 +18,6 @@ if(isset($_GET['action'])) {
 		case "update":
 			$products[$_GET['id']]->product_name = $_POST['product-name'];
 			$products[$_GET['id']]->product_description = $_POST['product-description'];
-			$products[$_GET['id']]->technical_specs = explode(", ", $_POST['tech-specs']);
 			$products[$_GET['id']]->price = $_POST['product-price'];
 
 			file_put_contents($filename,json_encode($products));
@@ -28,7 +26,6 @@ if(isset($_GET['action'])) {
 		case "create":
 			$empty_product->product_name = $_POST['product-name'];
 			$empty_product->product_description = $_POST['product-description'];
-			$empty_product->technical_specs = explode(", ", $_POST['tech-specs']);
 			$empty_product->price = $_POST['product-price'];
 
 			$id = count($products->products);
@@ -67,10 +64,6 @@ $display = <<<HTML
 		<strong>Price</strong>
 		<span>$product->price</span>
 	</div>
-	<div>
-		<strong>Technical Specs</strong>
-		<span>$technical_specs</span>
-	</div>
 </div>
 HTML;
 
@@ -84,10 +77,6 @@ $form = <<<HTML
 	<div class="form-control">
 		<label class="form-label" for="product-description">Description</label>
 		<input class="form-input" name="product-description" id="product-description" type="text" value="$product->product_description" placeholder="Enter the Product Description">
-	</div>
-	<div class="form-control">
-		<label class="form-label" for="tech-specs">Technical Specs</label>
-		<input class="form-input" name="tech-specs" id="tech-specs" type="text" value="$technical_specs" placeholder="Enter the Technical Specs, comma separated">
 	</div>
 	<div class="form-control">
 		<label class="form-label" for="product-price">Price</label>

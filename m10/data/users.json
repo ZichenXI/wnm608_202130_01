@@ -1,38 +1,20 @@
-"users":[{
-		"name": "Zichen Xi ",
-		"type": "Student",
-		"email": "zichenxi7seven@gmail.com",
-		"classes": [608, 613, 635]
+"users":[
+	{
+		"product_name":"Headphones1",
+		"product_description":"This is a wireless headphone with an aux cable included",
+		"technical_specs":["mem 16gb","storage 500gb"],
+		"price":1399
 	},
 	{
-
-		"name": "Li Han",
-
-		"type": "Student",
-
-		"email": "Lihan@gmail.com",
-
-		"classes": [608, 617, 820]
-
-
+		"product_name":"Headphones2",
+		"product_description":"This is a open headphone with an aux cable and subwofers",
+		"technical_specs":["mem 18gb","storage 1500gb"],
+		"price":1699
 	},
 	{
-		"name": "Yi Zhang Wan",
-
-		"type": "student",
-
-		"email": "yizhang@gmail.com",
-
-		"classes": [608, 613, 615]
-	},
-	{
-		"name": "Mandy",
-
-		"type": "Student",
-
-		"email": "mandynwy1129@gmail.com",
-
-		"classes": [608, 617, 820]
+		"product_name":"Headphones3",
+		"product_description":"This is a closed headphone without an aux cable included",
+		"technical_specs":["mem 12gb","storage 300gb"],
+		"price":899
 	}
-
 ]

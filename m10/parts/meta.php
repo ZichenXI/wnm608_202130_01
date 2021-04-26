@@ -1,4 +1,4 @@
-<base href="http://xizichen7x.com/wnm608_Project/aau/wnm608/zichen.xi/xisite/wnm608/m10/">
+ <base href="http://xizichen7x.com/wnm608_Project/aau/wnm608/zichen.xi/xisite/wnm608/">
 
 <meta name="viewport" content="width=device-width">
 

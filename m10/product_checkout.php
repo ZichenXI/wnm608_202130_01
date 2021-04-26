@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>PaintingStore: <?= $product->title?> </title>
+	<title>Audiophile: <?= $product->title?> </title>
 	<? include "parts/meta.php"; ?>
 </head>
 <body>

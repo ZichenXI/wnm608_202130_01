@@ -74,16 +74,20 @@
     <hr class="spacer large">
 
 </body>
-
-<footer>
-      <?php include "parts/footer.php" ?>
-   
-
-</footer>
-<script src="https://ajax.googleapis.com/ajax/libsjquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="styleguide/index.js"></script>
-
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

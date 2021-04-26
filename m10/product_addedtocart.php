@@ -13,7 +13,7 @@ $totalCartPrice = getCartTotalPrice();
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Paintingstore: <?=$product->title?> added to cart </title>
+	<title>Audiophile: <?=$product->title?> added to cart </title>
 
 	<? include "parts/meta.php"; ?>
 </head>

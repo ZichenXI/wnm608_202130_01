@@ -1,0 +1,20 @@
+{
+	"products":[
+	{
+		"product_name":"Painting",
+		"product_description":"This is a Paper Girl wears different colors in homage to the Memphis style",
+		"price":19
+	},
+	{
+		"product_name":"Paper Girl",
+		"product_description":"This is a Paper Girl wears different colors in homage to the Memphis style",
+		"price":19
+	},
+	{
+		"product_name":"Menphis style",
+		"product_description":"This is a Paper Girl wears different colors in homage to the Memphis style",
+		"price":19
+	}
+
+]
+}

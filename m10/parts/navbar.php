@@ -2,7 +2,7 @@
 <header class="navbar">
 		<div class="container display-flex">
 			<div class="flex-stretch">
-				<h1>Audiophile</h1>
+				<h1>Painting Store</h1>
 			</div>
 			<nav class="nav-flex">
 			<ul>
