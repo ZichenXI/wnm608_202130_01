@@ -1,48 +1,95 @@
 <?php
 
-include_once "lib/php/functions.php";
+include_once "lib/php/function.php";
+include_once "parts/templates.php";
+
 
 $p = cartItemByID($_GET['id']);
 
-$o = getRows(makeConn(),"SELECT * FROM `products` WHERE `id`={$_GET['id']}")[0];
+$o = getRows(makeConn(),"SELECT * FROM `products` WHERE `id` = '{$_GET['id']}'")[0];
 
-// print_p([getCart(),$p,$o]);
+// print_p($p,$o);
+
+// $result = getRows(
+//    makeConn(),
+//    "SELECT *
+//    FROM `products`
+//    WHERE `id` = '{$_GET['id']}'
+//    "
+// );
+
+$randProducts = getRows(
+   makeConn(),
+   "
+   SELECT *
+   FROM `products`
+   WHERE `id`IN (3,6,10)
+   "
+);
+
+// $o = $result[0];
+$thumbs = explode(",",$o->images);
+
+// print_p($result);
 
 ?><!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>Store: Product Added To Cart</title>
+<html>
+   <head>
+      <?php include "parts/meta.php" ?>
 
-	<?php include "parts/meta.php" ?>
+      <title>Add to cart</title>
+   </head>
+   <body>
+   
+      <?php include "parts/navbar.php" ?>
 
-</head>
-<body>
+   
+   
+      <div class="container">
+         
+         <div class="card soft">
+            <h2 class="text-align-center">Papergirls</h2>
+            <div class="display-flex added-to-cart margin-bottom-2">
+               <div class="cart-img flex-none">
+                  <img src="images/<?= $o->thumbnail ?>" alt="">
+               </div>
+               <div class="flex-stretch">
+                  <div class="display-flex added-to-cart-msg">
+                     <div class="flex-stretch">
+                        <h3 class="medium-color">Thank you! <?= $p->amount ?> of <?= $o->productName?> has been added to cart.</h3>
+                     </div>
+                     <div class="flex-none" >
+                        <a href="product_list.php" class="btn dark">Continue Shopping</a>
+                  
+                        <a href="product_cart.php" class="btn light">View Cart</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <hr>
+      <div class="container ">
+         
+            <h2 class="uppercase color-dark">You may also like:</h2>             
 
-	<?php include "parts/navbar.php" ?>
+      
+         <div class="grid margin-bottom-5">
+            <?php
+               echo array_reduce($randProducts, 'productListTemplate');
+            ?>
+                        
+         </div>
+      </div>
 
-	<div class="container">
-		<div class="card soft flat">
-			<div class="card-section">
-				<h2>Cart Confirmation</h2>
-				
-				<div>
-					Thank you for adding <?= $p->amount ?> of the <?= $o->title ?> to the cart.
-				</div>
-			</div>
+      
 
-			<div class="card-section">
-				<div class="display-flex">
-					<div class="flex-none">
-						<a href="product_list.php" class="form-button">Back to Shopping</a>
-					</div>
-					<div class="flex-stretch"></div>
-					<div class="flex-none">
-						<a href="product_cart.php" class="form-button">Check Cart</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-</body>
+<footer>
+      <?php include "parts/footer.php" ?>
+   
+
+</footer>
+
+      <script type="text/javascript" src="styleguide/index.js"></script>
+   </body>
 </html>

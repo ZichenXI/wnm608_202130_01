@@ -3,110 +3,104 @@
 include_once "lib/php/functions.php";
 include_once "parts/templates.php";
 
-$result = getRows(
-   makeConn(),
-   "SELECT *
-   FROM `products`
-   WHERE `id` = '{$_GET['id']}'
-   "
-);
-$o = $result[0];
+$product = MYSQLIQuery("SELECT * FROM products WHERE id = {$_GET['id']}")[0];
 
-$thumbs = explode(",", $o->images);
+$thumbs = explode(",",$product->image_other);
 
-// print_p($_SESSION);
+$thumbs_elements = array_reduce($thumbs,function($r,$o){
+   return $r."<img src='$o' style='height: 150px; width:150px;'>";
+});
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
-   <title>Store: Product Item</title>
+   <title>Store: <?= $product->name ?></title>
 
    <?php include "parts/meta.php" ?>
-
 </head>
 <body>
-
+   
    <?php include "parts/navbar.php" ?>
 
-   <div class="container">
-      <nav class="nav-crumbs" style="margin:1em 0">
-         <ul>
-            <li><a href="product_list.php">Back</a></li>
-         </ul>
-      </nav>
 
+   <div class="container">
       <div class="grid gap">
          <div class="col-xs-12 col-md-7">
             <div class="card soft">
-               <div class="product-main">
-                  <img src="images/store/<?= $o->main_image ?>" alt="">
-               </div>
-               <div class="product-thumbs">
-               <?php
-
-               echo array_reduce($thumbs,function($r,$o){
-                  return $r."<img src='images/store/$o'>";
-               })
-
-               ?>
+               <div class="image-main">
+                  <img src="<?= $product->image_main ?>" style="height: 300px; width: 300px;">
+               </div> 
+               <div class="image-thumbs">
+                  <?= $thumbs_elements ?>
                </div>
             </div>
          </div>
          <div class="col-xs-12 col-md-5">
-            <form class="card soft flat" method="get" action="form_actions.php">
+            <form class="card soft flat" method="post" action="product_actions.php?action=add-to-cart">
+               <input type="hidden" name="product-id" value="<?= $product->id ?>">
                <div class="card-section">
-                  <h2 class="product-title"><?= $o->title ?></h2>
-                  <div class="product-category"><?= $o->category ?></div>
-                  <div class="display-flex">
-                     <div class="product-description flex-stretch">
-                        <div class="product-price">&dollar;<?= $o->price ?></div>
-                     </div>
-                     <div class="product-quantity">
-                        <?= $o->quantity ?> in stock
+                  <h2><?= $product->name ?></h2>
+                  <div>&dollar;<?= $product->price ?></div>
+               </div>
+               <div class="card-section">
+                  <div class="form-control">
+                     
+                     <label for="product-amount" class="form-label">Amount</label>
+                     <div class="form-select">
+                        <select name="product-amount" id="product-amount">
+                           <!-- option[value=$]*10>{$} -->
+                           <option value="1">1</option>
+                           <option value="2">2</option>
+                           <option value="3">3</option>
+                           <option value="4">4</option>
+                           <option value="5">5</option>
+                           <option value="6">6</option>
+                           <option value="7">7</option>
+                           <option value="8">8</option>
+                           <option value="9">9</option>
+                           <option value="10">10</option>
+                        </select>
                      </div>
                   </div>
-               </div>
 
-               <div class="card-section">
-                  <label class="form-label">Amount</label>
-                  <select name="amount" class="form-button">
-                     <!-- option*10>{$} -->
-                     <option>1</option>
-                     <option>2</option>
-                     <option>3</option>
-                     <option>4</option>
-                     <option>5</option>
-                     <option>6</option>
-                     <option>7</option>
-                     <option>8</option>
-                     <option>9</option>
-                     <option>10</option>
-                  </select>
-               </div>
-
-               <div class="card-section">
-                  <input type="hidden" name="action" value="add-to-cart">
-                  <input type="hidden" name="id" value="<?= $o->id ?>">
-                  <input type="hidden" name="price" value="<?= $o->price ?>">
-                  <input type="submit" class="form-button" value="Add To Cart">
+                  </div>
+                  <div class="form-control">
+                     <input type="submit" class="form-button" value="Add To Cart">
+                  </div>
                </div>
             </form>
          </div>
       </div>
+      <div class="card soft medium">
+         <p><?= $product->description ?></p >
+      </div>
+         <h2>Related Products</h2>
 
-      <div class="card soft dark">
-         <h3>Description</h3>
-         <div class="product-description">
-            <?= $o->description ?>
+         <div class="grid gap">
+           
+            <?php
+
+            echo array_reduce(
+               MYSQLIQuery("
+                  SELECT *
+                  FROM products
+                  WHERE id in (4,6,8)
+               "),
+               'makeProductList'
+            );
+
+            ?>
          </div>
-      </div>
-
-      <div>
-         <h2>Recommended Products</h2>
-
-         <?php recommendedProducts($o->category,$o->id) ?>
-      </div>
    </div>
-   
+
 </body>
+
+<footer>
+      <?php include "parts/footer.php" ?>
+   
+
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libsjquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="styleguide/index.js"></script>
+
 </html>

@@ -4,21 +4,22 @@
 session_start();
 
 
-
-function print_p($v) {
-   echo "<pre>",print_r($v),"</pre>";
+// print pretty
+function print_p($d) {
+   echo "<pre>",print_r($d),"</pre>";
 }
 
 
-function getData($str) {
-   return json_decode(file_get_contents($str));
+function file_get_json($filename) {
+   $file = file_get_contents($filename);
+   return json_decode($file);
 }
 
 
-// include, require, include_once, require_once
-include_once "auth.php";
-function makeConn() {
-   @$conn = new mysqli(...makeAuth());
+function MYSQLIConn() {
+   include_once "auth.php";
+
+   @$conn = new mysqli(...MYSQLIAuth());
 
    if($conn->connect_errno) die($conn->connect_error);
 
@@ -26,26 +27,24 @@ function makeConn() {
 
    return $conn;
 }
-function makePDOConn() {
-   try {
-      $conn = new PDO(...makePDOAuth());
-   } catch(PDOException $e) {
-      die($e->getMessage());
-   }
-   return $conn;
-}
 
 
-function getRows($conn,$sql) {
+function MYSQLIQuery($sql) {
+   $conn = MYSQLIConn();
+
    $a = [];
 
    $result = $conn->query($sql);
-
    if($conn->errno) die($conn->error);
 
-   while($row = $result->fetch_object()) {
-      $a[] = $row;
+   // print_p([$conn,$result]);
+   // die;
+
+   if(@$result->num_rows) {
+      while($row = $result->fetch_object())
+         $a[] = $row;
    }
+   if(@$conn->insert_id) return $conn->insert_id;
 
    return $a;
 }
@@ -57,61 +56,77 @@ function getRows($conn,$sql) {
 
 
 
-
-// CART FUNCTIONS
+//  CART FUNCTIONS
 
 function array_find($array,$fn) {
    foreach($array as $o) if($fn($o)) return $o;
    return false;
 }
 
-
 function getCart() {
-   if(!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) $_SESSION['cart'] = [];
-   return $_SESSION['cart'];
+   return isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 }
 
-function addToCart($id,$amount,$price) {
+function setCart($a) {
+   $_SESSION['cart'] = $a;
+}
+function resetCart() { $_SESSION['cart']=[]; }
+
+function cartItemById($id) {
+   return array_find(getCart(),function($o)use($id){ return $o->id==$id; });
+}
+
+function addToCart($id,$amount) {
+   //resetCart();
    $cart = getCart();
 
-   $p = cartItemByID($id);
+   $p = cartItemById($id);
 
-   if($p) {
-      $p->amount += $amount;
-   } else {
-      $price = getRows(makeConn(),"SELECT `price` FROM `products` WHERE `id` = $id")[0]->price;
-      $_SESSION['cart'][] = (object) [
+   if($p) $p->amount = $amount;
+   else {
+      $cart[] = (object)[
          "id"=>$id,
-         "amount"=>$amount,
-         "price"=>$price
+         "amount"=>$amount
       ];
    }
 
+   setCart($cart);
 }
+
 
 
 function getCartItems() {
    $cart = getCart();
 
-   $ids = empty($cart) ? 0 : implode(",",array_map(function($o){return $o->id;},$cart));
-   $sql = "SELECT *
-      FROM `products`
-      WHERE `id` IN ($ids)
-      ";
+   if(empty($cart)) return [];
 
-   $database_result = getRows(
-      makeConn(),
-      $sql
-   );
+   $ids = implode(",",array_map(function($o){return $o->id;},$cart));
+
+   $products = MYSQLIQuery("SELECT * FROM products WHERE id in ($ids)");
 
    return array_map(function($o) use ($cart){
-      $cart_o = array_find($cart,function($c) use($o) { return $c->id==$o->id; });
-      $o->amount = $cart_o->amount;
-      $o->total = $o->price * $cart_o->amount;
+      $p = cartItemById($o->id);
+      $o->amount = $p->amount;
+      $o->total = $p->amount * $o->price;
       return $o;
-   },$database_result);
+   },$products);
 }
 
-function cartItemByID($id) {
-   return array_find(getCart(),function($o) use ($id){return $o->id==$id;});
+
+function makeCartBadge() {
+   $cart = getCart();
+   if(count($cart)==0) {
+      return "";
+   } else {
+      // return count($cart);
+      return array_reduce($cart,function($r,$o){return $r+$o->amount;});
+   }
+}
+
+
+
+
+
+function setDefault($k,$v) {
+   if(!isset($_GET[$k])) $_GET[$k] = $v;
 }

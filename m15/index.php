@@ -1,94 +1,69 @@
+<?php
+
+include_once "lib/php/functions.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Painting Store</title>
+   <title>Store</title>
 
-  <? include "parts/meta.php" ?>
-</head>
-<body>
-	
-  <? include "parts/navbar.php" ?>
+   <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="view-window hero" style="background-image: url(img/girls_thumb.jpg">
-    	<h1>Painting</h1>
-    </div>
-    
+<link rel="stylesheet" href="lib/css/styleguide.css">
+<link rel="stylesheet" href="lib/css/gridsystem.css">
+<link rel="stylesheet" href="css/storetheme.css">
 
-    <div class="container pad" id="introduction">
-    	<div class="card card-soft card-light card-flat">
-    		<div class="grid">
-    			<div class="col-xs-12 col-md-6 center-child">
-    				<div style="max-width: 75%;">
-    					<h2>The Style Infor</h2>
-    					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <span> Eum excepturi voluptas consequuntur et ut officia earum fugiat similique, delectus totam iste praesentium nesciunt porro, aspernatur deserunt tempore? Eaque, et, officia.</span><span>adipisicing elit. Eum excepturi voluptas consequuntur et ut officia earum fugiat similique, delectus totam iste praesentium nesciunt porro, aspernatur deserunt tempore? </span></p>
-    				</div>
-    			</div>
-    			<div class="col-xs-12 col-md-6">
-    				<img src="http://via.placeholder.com/600/ff971d/fff?text=Papergirls" alt="painting" class="image-cover">
-    			</div>
-    		</div>
-    	</div>
-    </div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script></head>
+   <body>
+   <?php include "parts/navbar.php" ?>
+    <nav class="nav flex-none">
+         <ul class="display-flex">
+            <li><a href="product_cart.php">
+               <span class="badge"><?= makeCartBadge() ?></span>
+            </a></li>
+         </ul>
+      </nav>
 
-    <hr class="spacer large">
 
-    <div class="container pad" id="categories">
-    	<h2>Categories</h2>
-    	<div class="grid gap xs-small md-large">
-    		<div class="col-xs-6 col-md-3">
-    			<figure>
-    				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Papergirls" alt="painting">
-    				</div>
-    				<figcation>Size</figcation>
-    			</figure>
-    		</div>
-    		<div class="col-xs-6 col-md-3">
-    			<figure>
-    				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Size" alt="painting">
-    				</div>
-    				<figcation>Details</figcation>
-    			</figure>
-    		</div>
-    		<div class="col-xs-6 col-md-3">
-    			<figure>
-    				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Details" alt="painting">
-    				</div>
-    				<figcation>Content</figcation>
-    			</figure>
-    		</div>
-    		<div class="col-xs-6 col-md-3">
-    			<figure>
-    				<div class="image-circle">
-    					<img src="https://via.placeholder.com/400/ff971d/fff?text=Infor" alt="painting">
-    				</div>
-    				<figcation>Popular</figcation>
-    			</figure>
-    		</div>
-    	</div>
-    </div>
+   <div class="view-window" style="background-image:url(img/background2.png)">
+   </div>
+   <div class="container">
+      <div class="card soft">
+         <h2>Welcome to the Store</h2>
+      </div>
+   </div>
 
-    <hr class="spacer large">
+   <div class="container">
+    <div class="col-xs-12 col-md-7">
+      <h2>New Poster</h2>
+      <div class="col-xs-12 col-md-4">
+         <div class="container">
+            <div class="col-xs-12 col-md-7">
+               <figure class="product-item">
+                  <div class="product-image">
+                     <img src="img/1cici_thumb.jpg" alt="">
+                  </div>
+                  <figcaption class="product-description">
+                     <div class="product-price">&dollar;16</div>
+                     <div class="product-title">cici</div>
+                     <div class="product-description">poster</div>
+                 </figcaption>
+               </figure>
+              
+          </div>
+       </div>
 
 </body>
+
+<footer>
+      <?php include "parts/footer.php" ?>
+   
+
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libsjquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="styleguide/index.js"></script>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

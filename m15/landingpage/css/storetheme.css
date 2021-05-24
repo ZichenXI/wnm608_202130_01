@@ -1,0 +1,50 @@
+:root {
+   --color-neutral-light:#eee;
+   --color-neutral-medium:#999;
+   --color-neutral-dark:#3333ff;
+   --color-neutral-theme1:#8fccec;
+
+   --color-white:#fff;
+   --color-black:#000;
+
+   --header-height:3rem;
+}
+
+body {
+   font-family:Avenir, sans-serif;
+   width: 100%;
+   line-height: 1.5;
+   -webkit-text-size-adjust: 100%;
+   color: #2c2c2c;
+   background: #fff;
+}
+
+
+
+
+.view-window>h2 {
+    position: relative;
+    display: flex;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translate(-50%,-50%);
+    min-height: 3.125rem;
+    padding: 0px 1.25rem;
+    border-radius: 1em;
+    color: #3333ff;
+    font-size: 3em;
+}
+    
+.btn{
+   width: fit-content;
+   padding:1em;
+   font-size:1em;
+   font-family: futura;
+}
+
+.btn.cta_primary{
+   background-color:var(--color-neutral-theme1);
+   color:var(--color-neutral-light);
+   
+}

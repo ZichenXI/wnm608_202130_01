@@ -1,32 +1,33 @@
 <?php
+
 include_once "lib/php/functions.php";
-$_SESSION['cart'] = [];
-?>
-<!DOCTYPE html>
+
+?><!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Store: Purchase Confirmation</title>
+   <?php include "parts/navbar.php" ?>
+   <title>Thanks</title>
 
-	<?php include "parts/meta.php" ?>
-
+   <?php include "parts/meta.php" ?>
 </head>
 <body>
 
-	<?php include "parts/navbar.php" ?>
+   <div class="container text-align-center">
+      <div class="card soft">
+         <h2>Thanks for Purchasing</h2>
+         <p>Thank you for shopping with Meowie. Your order has been placed and here is the confirmation number for your order: #12345678</p>
+				<div class="margin-top-2">
+					<a href="product_list.php" class="btn light">Continue Shopping</a>
+				</div>
+      </div>
+   </div>
 
-	<div class="container">
-		<div class="card soft">
-
-			<h2>Purchase Confirmation</h2>
-
-			<div>Thank you for buying</div>
-
-			<div>
-				<a href="product_list.php" class="form-button">Back to shopping</a>
-			</div>
-		
-		</div>
-	</div>
-	
 </body>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libsjquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="styleguide/index.js"></script>
+
 </html>

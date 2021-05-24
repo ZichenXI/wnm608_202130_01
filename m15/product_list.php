@@ -1,59 +1,148 @@
 <?php
 
 include_once "lib/php/functions.php";
+include_once "parts/templates.php";
+include_once "data/api.php";
+
+
+
+setDefault('s','');
+setDefault('t','products_all');
+setDefault('orderby_direction','DESC');
+setDefault('orderby','date_create');
+setDefault('limit','12');
+
+
+
+
+function makeSortOptions() {
+   $options = [
+      ["date_create","DESC","Latest Products"],
+      ["date_create","ASC","Oldest Products"],
+      ["price","DESC","Most Expensive"],
+      ["price","ASC","Least Expensive"]
+   ];
+   foreach($options as [$orderby,$direction,$name]) {
+      echo "
+      <option data-orderby='$orderby' data-direction='$direction'
+      ".($_GET['orderby']==$orderby && $_GET['orderby_direction']==$direction ? "selected" : "").">
+      $name
+      </option>
+      ";
+   }
+}
+
+function makeHiddenValues($arr1,$arr2) {
+   foreach(array_merge($arr1,$arr2) as $k=>$v) {
+      echo "<input type='hidden' name='$k' value='$v'>\n";
+   }
+}
+
+
+
+
+$result = makeStatement($_GET['t']);
+$products = isset($result['error']) ? [] : $result;
+
+
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Store: Product List</title>
+   <title>Product List</title>
 
-  <?php include "parts/meta.php" ?>
-
-  <script src="lib/js/functions.js"></script>
-  <script src="js/templates.js"></script>
-  <script src="js/list.js"></script>
-
+   <?php include "parts/meta.php" ?>
 </head>
 <body>
+   <?php include "parts/navbar.php" ?>
 
-  <?php include "parts/navbar.php" ?>
+   <div class="container">
 
+      <form action="product_list.php" method="get" class="hotdog stack">
 
-  <div class="container">
-    <h2>Product List</h2>
+         <input type="search" name="s" placeholder="Search for a product"
+         value="<?= @$_GET['s'] ?>">
 
-    <div class="form-control">
-      <form class="hotdog light" id="product-search">
-        <input type="search" class="search" placeholder="Search Products">
+         <?
+         makeHiddenValues([
+            "orderby"=>$_GET['orderby'],
+            "orderby_direction"=>$_GET['orderby_direction'],
+            "limit"=>$_GET['limit'],
+            "t"=>"search"
+         ],[]);
+         ?>
+
+         <!-- <button type="submit">Search</button> -->
+         <!-- <img src="img/icon_search.png"> -->
+         <input type="image" src="img/icon_search.png" alt="Submit" style="height:50px; width:80px">
       </form>
-    </div>
-    <div class="form-control display-flex">
-      <div class="flex-none">
-        <button type="button" class="form-button js-filter" data-column="category" data-value="">All</button>
-      </div>
-      <div class="flex-none">
-        <button type="button" class="form-button js-filter" data-column="category" data-value="fruit">Fruit</button>
-      </div>
-      <div class="flex-none">
-        <button type="button" class="form-button js-filter" data-column="category" data-value="vegetable">Vegetables</button>
-      </div>
-    </div>
-    <div class="form-control">
-      <!-- .form-select>select>option -->
-      <div class="form-select">
-        <select class="js-sort">
-          <option value="1">Newest</option>
-          <option value="2">Oldest</option>
-          <option value="3">Most Expensive</option>
-          <option value="4">Least Expensive</option>
-        </select>
-      </div>
-    </div>
 
-    <div class="grid gap productlist"></div>
+      <div class="display-flex" style="margin:1em 0">
+         <div class="flex-none display-flex">
+            <form action="product_list.php" method="get">
+               <?
+               makeHiddenValues($_GET,[
+                  "category"=>"poster",
+                  "t"=>"products_by_category"
+               ]);
+               ?>
 
-    <div><a href="admin">Product Admin</a></div>
-  </div>
-  
+               <input type="submit" value="Poster" class="form-button">
+            </form>
+            <form action="product_list.php" method="get">
+               <?
+               makeHiddenValues($_GET,[
+                  "category"=>"poster",
+                  "t"=>"products_by_category"
+               ]);
+               ?>
+
+               <input type="submit" value="Color" class="form-button">
+            </form>
+         </div>
+         <div class="flex-stretch"></div>
+         <div class="flex-none">
+            
+            <form action="product_list.php" method="get">
+
+               <?
+               makeHiddenValues($_GET,[]);
+               ?>
+               <div class="form-select">
+                  <select onchange="checkSort(this)">
+                     <?=makeSortOptions()?>
+                  </select>
+               </div>
+            </form>
+         </div>
+      </div>
+
+
+      <h2>Product List</h2>
+
+      <div class="grid gap">
+        
+         <?php
+
+         echo array_reduce(
+            $products,
+            'makeProductList'
+         );
+
+         ?>
+      </div>
+   </div>
+
+   <div class="container">
+      <div class="card soft">
+         <a href="admin">Product Admin</a>
+      </div>
+   </div>
+
 </body>
+
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libsjquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="styleguide/index.js"></script>
+
 </html>
